@@ -1,0 +1,14 @@
+div > span{
+    display: inline-block;
+    width:150px;
+}
+div{
+    margin: 5px 0;
+}
+input,textarea{
+    width:400px;
+}
+
+#output{
+    display: none;
+}

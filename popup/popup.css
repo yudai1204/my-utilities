@@ -1,0 +1,51 @@
+.ItemBox-CheckBox-Input {
+    display: none;
+    /* inputタグは非表示にする */
+}
+
+.ItemBox-CheckBox-Label {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 56px;
+    height: 24px;
+    border-radius: 80px;
+    background: #d0d2d9;
+    /* チェックされていない時の背景色 */
+    cursor: pointer;
+    transition: .2s ease;
+    /* 円が動くスピードを指定 */
+}
+
+.ItemBox-CheckBox-Input:checked+.ItemBox-CheckBox-Label {
+    background: #41c9b4;
+    /* チェックされた時の背景色 */
+}
+
+.ItemBox-CheckBox-Label:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border-radius: 80px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transition: .2s ease;
+    /* 円が動くスピードを指定 */
+}
+
+.ItemBox-CheckBox-Input:checked+.ItemBox-CheckBox-Label:before {
+    left: 33px;
+}
+.mainbody{
+    width: 200px;
+    height: 300px;
+    text-align: center;
+}
+
+#option{
+    text-decoration: underline;
+    margin-bottom:10px;
+    cursor: pointer;
+}
