@@ -45,3 +45,5 @@ document.getElementById("doGoogleClass").addEventListener("change",function(){
         doGoogleClass: document.getElementById("doGoogleClass").checked
     })
 })
+
+document.getElementById("openStartup").setAttribute("href",chrome.runtime.getURL("files/startup.html"));

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>時間割</title>
+        <style type="text/css">
+            body{
+                margin:30px 0;
+            }
+            div{
+                margin:0;padding:0;
+            }
+            a{
+                text-decoration:none;
+            }
+            .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            width: 860px;
+            margin:0 auto;
+            }  
+            .item2 {
+            margin:0 5px;
+            padding: 10px;
+            width: 130px;
+            height: 30px;
+            font-style: normal;
+            font-family: arial ,sans-serif;
+            background-color: #cffae8;
+            border-radius: 5px;
+            box-shadow: 0 0 3px 0px #24322c;
+            text-align: center;
+            font-size: 20px;
+            }
+            .time {
+            margin:0 5px;
+            padding: 10px;
+            width: 30px;
+            height: 100px;
+            font-style: normal;
+            font-family: arial ,sans-serif;
+            background-color: #cffae8;
+            border-radius: 5px;
+            box-shadow: 0 0 3px 0px #24322c;
+            text-align: center;
+            font-size: 20px;
+            }
+            .item2:hover{
+                background: #c4eddc;
+            }
+            .time:hover{
+                background: #c4eddc;
+            }
+
+            .item {
+            padding: 10px;
+            width: 130px;
+            height: 100px;
+            font-style: normal;
+            font-family: arial ,sans-serif;
+            background-color: snow;
+            border-radius: 5px;
+            box-shadow: 0 0 3px 0px #aaa;
+            text-align: center;
+            text-decoration: none;
+            }
+
+            .item:hover {
+            height: 100px;
+            background-color: #eee;
+            box-shadow: 0px 0px 3px 1px #999;
+            transition: box-shadow 100ms;
+            }
+            .item:not(:nth-child(6n+6)) {
+            margin: 1%;
+            }
+
+            .item:nth-child(n+6) {
+            margin: 0 5px;
+            margin-top: 20px;
+            }
+            .time:nth-child(n+6) {
+            margin: 0 5px;
+            margin-top: 20px;
+            }
+            h2{
+                font-family: arial ,sans-serif;
+                font-size: 13px;
+                color: rgba(0, 0, 0, 0.753);
+            }
+            img{
+                width: 45px;
+                margin: 3px 3px;
+                border-radius: 12px;
+                box-shadow:0 0 3px 1px #ccc;
+            }
+            img:hover{
+                box-shadow:0 0 5px 1px #aaa;
+            }
+            h1{
+                text-align: center;
+                margin: 0 auto 10px auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>1年後期 時間割</h1>
+        <h2 style="text-align: center;font-size:20px;">曜日 : <span id="viewTime"></span></h2>
+        <div class="wrap">
+            <div class="time" style="height:30px;"></div>
+            <div class="item2">月</div>
+            <div class="item2">火</div>
+            <div class="item2">水</div>
+            <div class="item2">木</div>
+            <div class="item2">金</div>
+            
+            <div class="time">1</div>
+            <div class="item">
+            <a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0105202001" target="_blank">
+                <h2>情報工学通論</h2>
+                <img src="scombicon.png"></a>
+            </div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0102152001"  target="_blank">
+                <h2>線形代数第2</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/98912608507?pwd=d3JTc2FiWE5POTR4a0xhWXNVcU9BUT09" target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0073152001"  target="_blank">
+                <h2>Listening & Speaking I</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/98279910458"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0102122001"  target="_blank">
+                <h2>確率と統計第１</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/95062986865?pwd=RVExbHNOUEpZZXZONjh2bFBoMDVSUT09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item">
+            </div>
+
+            <div class="time">2</div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0102182001"  target="_blank">
+                <h2>離散数学2</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/96438583299?pwd=Sm5pQjJMYUF0Tnd6amFaVytRN0kyQT09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0088572001"  target="_blank">
+                <h2 style="font-size: 11px;">コンピュータアーキテクチャ</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/94522174351?pwd=cElobUdOcUg4cWJXbGNhQXRtN21hdz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0103522001"  target="_blank">
+                <h2>TOEIC I</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/93676907658?pwd=L1RMcU83UWU4a2ZIZ2JmNjgvMHpQZz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0093732001"  target="_blank">
+                <h2>経済学</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/8761954096?pwd=c3E0VGE5MzdrcTNTbEQrTHRwekp3Zz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0067232001"  target="_blank">
+                <h2>基礎固体化学</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/98575665239?pwd=aklrbzJoQzB1QUl5RlNTMS9mNGpoZz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+
+            <div class="time">3</div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0105282001"  target="_blank">
+                <h2>プログラミング入門２</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/96311541988"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item">
+            </div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0099592001"  target="_blank">
+                <h2>微分方程式</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/95626931274?pwd=UG82TTlpaTg1WnZKaXR5bjd4Z0l1dz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0093502001"  target="_blank">
+                <h2>現代の日本経済</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/8761954096?pwd=c3E0VGE5MzdrcTNTbEQrTHRwekp3Zz09"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item">
+            </div>
+            
+            <div class="time">4</div>
+            <div class="item"><a href="https://scomb.shibaura-it.ac.jp/lms/course/view.php?idnumber=202101SU0105282001"  target="_blank">
+                <h2>プログラミング入門２</h2>
+                <img src="scombicon.png"></a>
+                <a href="https://shibaura-it.zoom.us/j/96311541988"  target="_blank"><img src="zoom.png">
+            </a></div>
+            <div class="item">
+            </div>
+            <div class="item">
+            </div>
+            <div class="item">
+            </div>
+            <div class="item">
+            </div>
+        </div>
+        <script type="text/javascript">
+            document.getElementById("viewTime").innerHTML = getNowTime();
+            
+            function getNowTime() {
+                var now = new Date();
+                var you = now.getDay(); //曜日
+            
+                //曜日の配列（日～土）
+                var youbi = new Array("日","月","火","水","木","金","土");
+                //出力
+                var s =  youbi[you] ;
+                return s;
+            }
+        </script>
+    </body>
+</html>
