@@ -3,8 +3,8 @@
 
   "manifest_version": 3,
   "name": "My Utilities",
-  "version": "0.1.3",
-  "description": "フォーム自動入力、Twitter自動更新、パスワード入力、classroomユーザ自動選択",
+  "version": "0.1.4",
+  "description": "フォーム自動入力、Twitter自動更新、パスワード入力、classroomユーザ自動選択、gmail自動入力",
   "background": {
     "service_worker": "background.js"
   },
@@ -14,7 +14,14 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["main.js", "twitter.js", "formUtl.js", "google.js", "utilities.js"]
+      "js": [
+        "main.js",
+        "twitter.js",
+        "formUtl.js",
+        "google.js",
+        "utilities.js",
+        "gmail.js"
+      ]
     }
   ],
   "permissions": ["storage"],
