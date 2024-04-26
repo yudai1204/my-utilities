@@ -1,11 +1,25 @@
 import { Box, Button, Typography, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const OptionsIndex = () => {
   const [seimei, setSeimei] = useState("");
   const [timesID1, setTimesID1] = useState("");
   const [timesID2, setTimesID2] = useState("");
   const [gmailsJson, setGmailsJson] = useState("");
+
+  useEffect(() => {
+    chrome.storage.local.get(["data", "gmailAccounts"], (result) => {
+      const { data, gmailAccounts } = result;
+      if (data) {
+        setSeimei(data.seimei ?? "");
+        setTimesID1(data.timesID1 ?? "");
+        setTimesID2(data.timesID2 ?? "");
+      }
+      if (gmailAccounts) {
+        setGmailsJson(JSON.stringify(gmailAccounts, null, 2));
+      }
+    });
+  }, []);
 
   const save = () => {
     chrome.storage.local.set(

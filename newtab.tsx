@@ -9,17 +9,12 @@ export default function Home() {
   return (
     <Box position="relative">
       <head>
-        <title>New Tab Page</title>
+        <title>新しいタブ</title>
       </head>
       <Box p={1}>
         <Box display="flex" justifyContent="flex-end">
           <Gmails />
           <GoogleMenu />
-        </Box>
-        <Box maxWidth="980px" margin="0 auto" mt={24}>
-          <Box mt={3}>
-            <Bookmarks />
-          </Box>
         </Box>
       </Box>
       <Box width="100%" textAlign="center" position="absolute" top={80}>
@@ -30,8 +25,13 @@ export default function Home() {
             style={{ width: 200 }}
           />
         </a>
-        <Box width="85%" margin="0 auto" mt={-3}>
+        <Box width="85%" margin="0 auto">
           <GoogleSearchBox />
+        </Box>
+        <Box maxWidth="980px" margin="0 auto">
+          <Box mt={3}>
+            <Bookmarks />
+          </Box>
         </Box>
       </Box>
     </Box>
