@@ -1,26 +1,21 @@
-import { useState } from "react"
+import { Box, Button, Typography } from "@mui/material";
 
-function IndexPopup() {
-  const [data, setData] = useState("")
+const openOptions = () => {
+  chrome.runtime.openOptionsPage();
+};
 
+const IndexPopup = () => {
   return (
-    <div
-      style={{
-        padding: 16
-      }}>
-      <h2>
-        Welcome to your{" "}
-        <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
-    </div>
-  )
-}
+    <Box minWidth={120} textAlign="center" m={2}>
+      <Typography variant="h5">My Utilities</Typography>
+      <Box my={1}>
+        <Button variant="contained" onClick={openOptions}>
+          {" "}
+          Options
+        </Button>
+      </Box>
+    </Box>
+  );
+};
 
-export default IndexPopup
+export default IndexPopup;

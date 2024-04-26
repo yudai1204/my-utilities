@@ -1,11 +1,11 @@
-import { Box, Typography } from "@mui/material"
-import { useState } from "react"
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 
 type Account = {
-  name: string
-  email?: string
-  url: string
-}
+  name: string;
+  email?: string;
+  url: string;
+};
 
 const MailButton = ({ account }: { account: Account }) => {
   return (
@@ -13,7 +13,8 @@ const MailButton = ({ account }: { account: Account }) => {
       href={account.url}
       target="_blank"
       rel="noopener noreferrer"
-      style={{ textDecoration: "none" }}>
+      style={{ textDecoration: "none" }}
+    >
       <Box
         display="flex"
         flexDirection="column"
@@ -21,7 +22,8 @@ const MailButton = ({ account }: { account: Account }) => {
         justifyContent="center"
         color="#000"
         p={0.5}
-        sx={{ "&:hover": { textDecoration: "underline" } }}>
+        sx={{ "&:hover": { textDecoration: "underline" } }}
+      >
         <Typography color="inherit">{account.name}</Typography>
         {account.email && (
           <Typography variant="caption" color="#444">
@@ -30,26 +32,26 @@ const MailButton = ({ account }: { account: Account }) => {
         )}
       </Box>
     </a>
-  )
-}
+  );
+};
 
 export const Gmails = () => {
   const defaultAccounts: Account[] = [
     {
       name: "Gmail (メイン)",
-      url: "https://mail.google.com/mail/u/0/#inbox"
+      url: "https://mail.google.com/mail/u/0/#inbox",
     },
     {
       name: "Gmail (サブ)",
-      url: "https://mail.google.com/mail/u/1/#inbox"
-    }
-  ]
-  const [accounts, setAccounts] = useState<Account[]>([])
+      url: "https://mail.google.com/mail/u/1/#inbox",
+    },
+  ];
+  const [accounts, setAccounts] = useState<Account[]>(defaultAccounts);
 
   chrome.storage.local.get("gmailAccounts", (result) => {
-    const accounts: Account[] = result.gmailAccounts || defaultAccounts
-    setAccounts(accounts)
-  })
+    const accounts: Account[] = result.gmailAccounts || defaultAccounts;
+    setAccounts(accounts);
+  });
 
   return (
     <Box
@@ -57,11 +59,12 @@ export const Gmails = () => {
         display: "flex",
         flexDirection: "column",
         gap: 0,
-        width: 220
-      }}>
+        width: 220,
+      }}
+    >
       {accounts?.map((account) => (
         <MailButton key={account.email} account={account} />
       ))}
     </Box>
-  )
-}
+  );
+};

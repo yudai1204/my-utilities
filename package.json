@@ -1,13 +1,14 @@
 {
-  "name": "newtab-page-extension",
-  "displayName": "Newtab page extension",
-  "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "name": "my-utilities",
+  "displayName": "My Utilities",
+  "version": "0.3.0",
+  "description": "フォーム自動入力、Twitter自動更新、パスワード入力、classroomユーザ自動選択、gmail自動入力など",
   "author": "yudai",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "eslint": "eslint '**/*.ts?(x)' --fix"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -16,6 +17,7 @@
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@plasmohq/messaging": "^0.6.2",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
     "plasmo": "^0.74.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -26,6 +28,10 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-react": "^7.33.2",
     "prettier": "3.2.4",
     "typescript": "5.3.3"
   },
@@ -39,6 +45,9 @@
           "https://*/*"
         ]
       }
+    ],
+    "permissions": [
+      "storage"
     ],
     "host_permissions": [
       "https://*/*"

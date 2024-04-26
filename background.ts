@@ -7,8 +7,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     )
       .then((response) => response.text())
       .then((data) => {
-        sendResponse(data)
-      })
-    return true
+        sendResponse(data);
+      });
+    return true;
   }
-})
+});

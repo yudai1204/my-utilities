@@ -1,13 +1,13 @@
-import { Box, Button, IconButton, Typography } from "@mui/material"
-import { useState } from "react"
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import { useState } from "react";
 
 type GoogleIconsProps = {
-  iconUrl: string
-  url: string
-  title: string
-}
+  iconUrl: string;
+  url: string;
+  title: string;
+};
 const GoogleIcons = (props: GoogleIconsProps) => {
-  const { iconUrl, url, title } = props
+  const { iconUrl, url, title } = props;
   return (
     <a href={url} style={{ color: "transparent", textDecoration: "none" }}>
       <Button
@@ -20,8 +20,9 @@ const GoogleIcons = (props: GoogleIconsProps) => {
           height: 90,
           aspectRatio: 1,
           color: "text.primary",
-          gap: 0.5
-        }}>
+          gap: 0.5,
+        }}
+      >
         <img
           src={chrome.runtime.getURL(`assets/${iconUrl}`)}
           alt={title}
@@ -32,12 +33,12 @@ const GoogleIcons = (props: GoogleIconsProps) => {
         </Typography>
       </Button>
     </a>
-  )
-}
+  );
+};
 
 export const GoogleMenu = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const toggle = () => setIsOpen(!isOpen)
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
     <Box
@@ -47,15 +48,17 @@ export const GoogleMenu = () => {
         gap: 0,
         width: 50,
         position: "relative",
-        zIndex: 1
-      }}>
+        zIndex: 1,
+      }}
+    >
       <IconButton
         sx={{
           width: 45,
           height: 45,
-          aspectRatio: 1
+          aspectRatio: 1,
         }}
-        onClick={toggle}>
+        onClick={toggle}
+      >
         <img
           src={chrome.runtime.getURL("assets/apps.svg")}
           alt="apps"
@@ -71,8 +74,9 @@ export const GoogleMenu = () => {
           padding: 1.5,
           borderRadius: 6,
           boxShadow: "2px 4px 8px 0 #0004",
-          display: isOpen ? "block" : "none"
-        }}>
+          display: isOpen ? "block" : "none",
+        }}
+      >
         <Box sx={{ background: "#f8fafd", padding: 2, borderRadius: 4 }}>
           <Box
             sx={{
@@ -81,8 +85,9 @@ export const GoogleMenu = () => {
               width: "100%",
               height: "100%",
               padding: 0,
-              gridTemplateColumns: "repeat(3, 1fr)"
-            }}>
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
             <GoogleIcons
               iconUrl="gmail.png"
               url="https://mail.google.com/"
@@ -132,5 +137,5 @@ export const GoogleMenu = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
