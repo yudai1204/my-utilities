@@ -60,6 +60,7 @@ export const Gmails = () => {
         flexDirection: "column",
         gap: 0,
         width: 220,
+        zIndex: 1,
       }}
     >
       {accounts?.map((account) => (

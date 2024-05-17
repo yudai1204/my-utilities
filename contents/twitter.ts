@@ -1,10 +1,10 @@
 import type { PlasmoCSConfig } from "plasmo";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://twitter.com/*"],
+  matches: ["https://twitter.com/*", "https://x.com/*"],
 };
 
-if (location.href.includes("https://twitter.com/")) {
+if (true) {
   console.log("[Amgm_Script{Twitter}] start: Twitter_TLAutoReload v.0.2.0");
   let $header = null;
   const $mark = document.createElement("div"),

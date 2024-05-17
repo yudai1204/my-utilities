@@ -11,7 +11,7 @@ export default function Home() {
       <head>
         <title>新しいタブ</title>
       </head>
-      <Box p={1}>
+      <Box p={1} zIndex={1}>
         <Box display="flex" justifyContent="flex-end">
           <Gmails />
           <GoogleMenu />
@@ -25,7 +25,7 @@ export default function Home() {
             style={{ width: 200 }}
           />
         </a>
-        <Box width="85%" margin="0 auto">
+        <Box width="85%" margin="0 auto" maxWidth="980px">
           <GoogleSearchBox />
         </Box>
         <Box maxWidth="980px" margin="0 auto">
