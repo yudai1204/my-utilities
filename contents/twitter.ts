@@ -102,7 +102,7 @@ if (true) {
   setInterval(
     () =>
       window.scrollY <= 200 &&
-      /twitter\.com\/home/.test(location.href) &&
+      /(twitter)|(x)\.com\/home/.test(location.href) &&
       reloadTL(changeReloadDisplay),
     6000,
   );
