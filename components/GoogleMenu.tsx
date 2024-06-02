@@ -129,9 +129,9 @@ export const GoogleMenu = () => {
               title="ドキュメント"
             />
             <GoogleIcons
-              iconUrl="analytics.png"
-              url="https://analytics.google.com/"
-              title="アナリティクス"
+              iconUrl="gcal.png"
+              url="https://calendar.google.com/calendar/u/0/r"
+              title="カレンダー"
             />
           </Box>
         </Box>
