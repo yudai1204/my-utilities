@@ -54,9 +54,9 @@ export const Bookmarks = () => {
       url: "https://www.amazon.co.jp",
     },
     {
-      title: "なろう",
-      imageUrl: "narou.jpeg",
-      url: "https://syosetu.com/favnovelmain/list/",
+      title: "TimeTree",
+      imageUrl: "timetree.webp",
+      url: "https://timetreeapp.com/calendars",
     },
   ];
   return (
