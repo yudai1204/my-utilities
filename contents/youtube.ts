@@ -44,35 +44,6 @@ toNormalButton.addEventListener("click", () => {
   location.href = `https://www.youtube.com/watch?v=${id}`;
 });
 
-document.head.insertAdjacentHTML(
-  "beforeend",
-  `<style>
-    #player.udai_chrome_extension_player {
-      top: 56px !important;
-      position: fixed !important;
-      left: 0 !important;
-      z-index: 1000 !important;
-    }
-    #player.udai_chrome_extension_player {
-      transform-origin: top left !important;
-      transform: scale(0.5) !important;
-    }
-
-    </style>`,
-);
-window.addEventListener("scroll", () => {
-  console.log(window.scrollY);
-  if (window.scrollY > 600) {
-    document
-      .getElementById("player")
-      ?.classList.add("udai_chrome_extension_player");
-  } else {
-    document
-      .getElementById("player")
-      ?.classList.remove("udai_chrome_extension_player");
-  }
-});
-
 setInterval(() => {
   if (location.href.startsWith("https://www.youtube.com/shorts/")) {
     toNormalButton.style.display = "block";
