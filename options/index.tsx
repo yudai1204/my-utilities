@@ -6,9 +6,10 @@ const OptionsIndex = () => {
   const [timesID1, setTimesID1] = useState("");
   const [timesID2, setTimesID2] = useState("");
   const [gmailsJson, setGmailsJson] = useState("");
+  const [gemini_api_key, setGeminiApiKey] = useState("");
 
   useEffect(() => {
-    chrome.storage.local.get(["data", "gmailAccounts"], (result) => {
+    chrome.storage.local.get(["data", "gmailAccounts", "api_key"], (result) => {
       const { data, gmailAccounts } = result;
       if (data) {
         setSeimei(data.seimei ?? "");
@@ -17,6 +18,9 @@ const OptionsIndex = () => {
       }
       if (gmailAccounts) {
         setGmailsJson(JSON.stringify(gmailAccounts, null, 2));
+      }
+      if (result.api_key) {
+        setGeminiApiKey(result.api_key);
       }
     });
   }, []);
@@ -29,7 +33,8 @@ const OptionsIndex = () => {
           timesID1,
           timesID2,
         },
-        gmailAccounts: JSON.parse(gmailsJson),
+        gmailAccounts: gmailsJson ? JSON.parse(gmailsJson) : undefined,
+        api_key: gemini_api_key,
       },
       () => {
         alert("保存しました");
@@ -87,6 +92,17 @@ const OptionsIndex = () => {
             sx={{ width: 500 }}
             value={gmailsJson}
             onChange={(e) => setGmailsJson(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <Typography variant="body2">Gemini API Key</Typography>
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="API Key"
+            sx={{ width: 300 }}
+            value={gemini_api_key}
+            onChange={(e) => setGeminiApiKey(e.target.value)}
           />
         </Box>
       </Box>
