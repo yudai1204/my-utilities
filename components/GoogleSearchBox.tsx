@@ -18,25 +18,22 @@ export const GoogleSearchBox = () => {
     const resolver = async () => {
       const val = encodeURIComponent(value);
       // eslint-disable-next-line max-len
-      const url = `https://corsproxy.io/?https%3A%2F%2Fwww.google.com%2Fcomplete%2Fsearch%3Fhl%3Dja%26q%3D${val}%26output%3Dtoolbar`;
+      const url = `https://www.google.com/complete/search?client=chrome&q=${val}`;
       const res = await fetch(url);
-      // parse as xml
-      const xml = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(xml, "application/xml");
-      const suggestions = doc.getElementsByTagName("suggestion");
-      const results = Array.from(suggestions).map((suggestion) => {
-        return suggestion.getAttribute("data");
-      });
-      setSuggests(results as string[]);
+      const json = await res.json();
+      const results = json[1];
+      console.log(json);
+      setSuggests([...new Set(results)] as string[]);
     };
     resolver();
   };
 
   const search = (value: string | null) => {
     if (!value) return;
-    const url = `https://www.google.com/search?q=${encodeURIComponent(value)}`;
-    location.href = url;
+    chrome.search.query({
+      text: value,
+      disposition: "CURRENT_TAB",
+    });
   };
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
