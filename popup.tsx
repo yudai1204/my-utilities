@@ -1,4 +1,12 @@
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Snackbar,
+  Alert,
+  ButtonGroup,
+  CircularProgress,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 const openOptions = () => {
@@ -23,21 +31,35 @@ const getCode = (bodies) => {
 
 const IndexPopup = () => {
   const [items, setItems] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success",
+  );
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getGmails();
   }, []);
 
   const getGmails = () => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    setItems([]);
     chrome.runtime.sendMessage({ message: "fetchLatestEmails" }, (response) => {
       console.log(response);
       setItems(response);
+      setIsLoading(false);
     });
   };
 
   const onClickItem = (item, items) => {
     if (item.code) {
       navigator.clipboard.writeText(item.code);
+      setSnackbarMessage("コピーしました: " + item.code);
+      setOpenSnackbar(true);
       return;
     }
     setItems(
@@ -63,22 +85,51 @@ const IndexPopup = () => {
         console.log("code", code);
         item.code = code.trim();
         setItems([...items]);
-        navigator.clipboard.writeText(code);
+        if (code.trim() === "該当なし") {
+          setSnackbarSeverity("error");
+          setSnackbarMessage("コードが見つかりませんでした");
+        } else {
+          navigator.clipboard.writeText(code);
+          setSnackbarMessage("コピーしました: " + code);
+          setSnackbarSeverity("success");
+        }
+        setOpenSnackbar(true);
       },
     );
   };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   return (
     <Box width={300} textAlign="center" m={2}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Typography variant="h5">My Utilities</Typography>
       <Box my={1}>
-        <Button variant="contained" onClick={openOptions}>
-          {" "}
-          Options
-        </Button>
-        <Button variant="contained" onClick={getGmails}>
-          gmails
-        </Button>
+        <ButtonGroup>
+          <Button variant="contained" onClick={openOptions}>
+            {" "}
+            Options
+          </Button>
+          <Button variant="contained" onClick={getGmails}>
+            gmails
+          </Button>
+        </ButtonGroup>
         <Box
           mt={2}
           sx={{
@@ -87,95 +138,109 @@ const IndexPopup = () => {
             display: "flex",
             overflowX: "hidden",
             flexDirection: "column",
+            minHeight: "240px",
           }}
         >
-          {items.map((item, index) => {
-            const from = item.headers.find(
-              (header) => header.name === "From",
-            ).value;
-            const subject = item.headers.find(
-              (header) => header.name === "Subject",
-            ).value;
-            const isLikeCode = includeCode(item.bodies);
-            return (
-              <Box
-                key={index}
-                sx={{
-                  borderBottom: "1px solid #aaa",
-                  userSelect: "none",
-                  py: "4px",
-                  px: "4px",
-                  cursor: "pointer",
-                  position: "relative",
-                  "&:hover": {
-                    backgroundColor: "#eee",
-                  },
-                  "&:active": {
-                    backgroundColor: "#ddd",
-                  },
-                  "&:last-child": {
-                    borderBottom: "none",
-                  },
-                }}
-                onClick={() => onClickItem(item, items)}
-              >
+          {items.length === 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: "100%",
+                pt: "100px",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            items.map((item, index) => {
+              const from = item.headers.find(
+                (header) => header.name === "From",
+              ).value;
+              const subject = item.headers.find(
+                (header) => header.name === "Subject",
+              ).value;
+              const isLikeCode = includeCode(item.bodies);
+              return (
                 <Box
+                  key={index}
                   sx={{
-                    position: "absolute",
-                    top: "0",
-                    right: "0",
-                    backgroundColor: isLikeCode ? "green" : "gray",
-                    opacity: "0.8",
-                    color: "white",
-                    padding: "2px",
-                    borderRadius: "4px",
-                    fontSize: ".6rem",
+                    borderBottom: "1px solid #aaa",
+                    userSelect: "none",
+                    py: "4px",
+                    px: "4px",
+                    cursor: "pointer",
+                    position: "relative",
+                    "&:hover": {
+                      backgroundColor: "#eee",
+                    },
+                    "&:active": {
+                      backgroundColor: "#ddd",
+                    },
+                    "&:last-child": {
+                      borderBottom: "none",
+                    },
                   }}
+                  onClick={() => onClickItem(item, items)}
                 >
-                  {isLikeCode ? "Code" : "No Code"}
-                </Box>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      backgroundColor: isLikeCode ? "green" : "gray",
+                      opacity: "0.8",
+                      color: "white",
+                      padding: "2px",
+                      borderRadius: "4px",
+                      fontSize: ".6rem",
+                    }}
+                  >
+                    {isLikeCode ? "Code" : "No Code"}
+                  </Box>
 
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: ".8rem",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {subject}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: ".6rem",
-                    color: "gray",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {from}
-                </Typography>
-                {item.code && (
-                  <>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontSize: ".8rem",
-                        color: item.code === "該当なし" ? "red" : "green",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {item.code}
-                    </Typography>
-                  </>
-                )}
-              </Box>
-            );
-          })}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: ".8rem",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {subject}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: ".6rem",
+                      color: "gray",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {from}
+                  </Typography>
+                  {item.code && (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: ".8rem",
+                          color: item.code === "該当なし" ? "red" : "green",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {item.code}
+                      </Typography>
+                    </>
+                  )}
+                </Box>
+              );
+            })
+          )}
         </Box>
       </Box>
     </Box>
