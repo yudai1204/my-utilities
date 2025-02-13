@@ -138,7 +138,7 @@ const IndexPopup = () => {
             display: "flex",
             overflowX: "hidden",
             flexDirection: "column",
-            minHeight: "240px",
+            minHeight: "132px",
           }}
         >
           {items.length === 0 ? (
@@ -147,7 +147,7 @@ const IndexPopup = () => {
                 display: "flex",
                 justifyContent: "center",
                 height: "100%",
-                pt: "100px",
+                pt: "45px",
               }}
             >
               <CircularProgress />

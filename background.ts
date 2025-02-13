@@ -64,9 +64,9 @@ const fetchLatestEmails = (sendResponse) => {
       console.error(chrome.runtime.lastError);
       return;
     }
-    // 最新の受信メール8件を取得するリクエスト
+    // 最新の受信メール3件を取得するリクエスト
     fetch(
-      "https://www.googleapis.com/gmail/v1/users/me/messages?maxResults=8",
+      "https://www.googleapis.com/gmail/v1/users/me/messages?maxResults=3",
       {
         headers: {
           Authorization: "Bearer " + token,
