@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   } else if (request.message === "fetchGemini") {
     fetchGemini(request.query, sendResponse);
   }
+  return true;
 });
 
 const fetchGemini = async (query, sendResponse) => {

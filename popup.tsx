@@ -141,7 +141,7 @@ const IndexPopup = () => {
             minHeight: "132px",
           }}
         >
-          {items.length === 0 ? (
+          {!items || items.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
