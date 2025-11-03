@@ -1,4 +1,4 @@
-import { Box, Button, Typography, TextField } from "@mui/material";
+import { Box, Button, Typography, TextField, Switch } from "@mui/material";
 import { useState, useEffect } from "react";
 
 const OptionsIndex = () => {
@@ -7,7 +7,7 @@ const OptionsIndex = () => {
   const [timesID2, setTimesID2] = useState("");
   const [gmailsJson, setGmailsJson] = useState("");
   const [gemini_api_key, setGeminiApiKey] = useState("");
-
+  const [twitter_auto_reload, setTwitterAutoReload] = useState(false);
   useEffect(() => {
     chrome.storage.local.get(["data", "gmailAccounts", "api_key"], (result) => {
       const { data, gmailAccounts } = result;
@@ -15,6 +15,7 @@ const OptionsIndex = () => {
         setSeimei(data.seimei ?? "");
         setTimesID1(data.timesID1 ?? "");
         setTimesID2(data.timesID2 ?? "");
+        setTwitterAutoReload(data.twitter_auto_reload ?? false);
       }
       if (gmailAccounts) {
         setGmailsJson(JSON.stringify(gmailAccounts, null, 2));
@@ -32,6 +33,7 @@ const OptionsIndex = () => {
           seimei,
           timesID1,
           timesID2,
+          twitter_auto_reload,
         },
         gmailAccounts: gmailsJson ? JSON.parse(gmailsJson) : undefined,
         api_key: gemini_api_key,
@@ -103,6 +105,13 @@ const OptionsIndex = () => {
             sx={{ width: 300 }}
             value={gemini_api_key}
             onChange={(e) => setGeminiApiKey(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <Typography variant="body2">Twitter Auto Reload</Typography>
+          <Switch
+            checked={twitter_auto_reload}
+            onChange={(e) => setTwitterAutoReload(e.target.checked)}
           />
         </Box>
       </Box>

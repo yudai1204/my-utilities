@@ -99,15 +99,19 @@ if (true) {
     }
   };
 
-  setInterval(
-    () =>
-      window.scrollY <= 200 &&
-      /(twitter)|(x)\.com\/home/.test(location.href) &&
-      reloadTL(changeReloadDisplay),
-    6000,
-  );
+  chrome.storage.local.get({ data: {} }, (storage) => {
+    if (storage.data?.twitter_auto_reload) {
+      setInterval(
+        () =>
+          window.scrollY <= 80 &&
+          /(twitter)|(x)\.com\/home/.test(location.href) &&
+          reloadTL(changeReloadDisplay),
+        30 * 1000,
+      );
 
-  setInterval(updateMark, 200);
+      setInterval(updateMark, 200);
+    }
+  });
 
   const keyInfo = {
     pressed: new Set(),
