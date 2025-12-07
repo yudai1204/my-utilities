@@ -1,7 +1,7 @@
 {
   "name": "my-utilities",
   "displayName": "My Utilities",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "フォーム自動入力、Twitter自動更新、パスワード入力、classroomユーザ自動選択、gmail自動入力など",
   "author": "yudai",
   "scripts": {
@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.16.14",
     "@mui/material": "^5.16.14",
     "@plasmohq/messaging": "^0.6.2",
+    "@types/dom-chromium-ai": "^0.0.11",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "plasmo": "^0.74.2",
     "react": "18.2.0",

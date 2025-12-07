@@ -6,6 +6,7 @@ import {
   Alert,
   ButtonGroup,
   CircularProgress,
+  LinearProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -37,9 +38,58 @@ const IndexPopup = () => {
     "success",
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [geminiState, setGeminiState] = useState<string>("undefined");
+  const [geminiProgress, setGeminiProgress] = useState<number>(0);
+
+  const [geminiSession, setGeminiSession] = useState<LanguageModel | null>(
+    null,
+  );
+
+  const initGeminiNanoState = async () => {
+    const availability = await LanguageModel.availability();
+    setGeminiState(availability);
+    console.log("geminiState", availability);
+  };
+
+  const initGeminiNano = async () => {
+    const session = await LanguageModel.create({
+      monitor(m) {
+        m.addEventListener("downloadprogress", (e) => {
+          const percentage = Math.round(e.loaded * 100 * 10) / 10;
+          setGeminiState("downloading");
+          setGeminiProgress(percentage);
+        });
+      },
+      initialPrompts: [
+        {
+          role: "system",
+          content:
+            "ユーザはメール本文を text/plain か text/html 、もしくは両方を含む形であなたに送信します。\n" +
+            "あなたは、そのメール本文から、 確認コード/ログインコード/code やそれに類するものを抜き出して、それ単体を出力してください。\n" +
+            "もし 確認コード/ログインコード/code のいずれも含まれない場合は、 該当なし と出力してください。",
+        },
+      ],
+      expectedInputs: [
+        {
+          type: "text",
+          languages: ["en", "ja"],
+        },
+      ],
+      expectedOutputs: [
+        {
+          type: "text",
+          languages: ["en", "ja"],
+        },
+      ],
+    });
+
+    setGeminiSession(session);
+    setGeminiState("available");
+  };
 
   useEffect(() => {
     getGmails();
+    initGeminiNanoState();
   }, []);
 
   const getGmails = () => {
@@ -55,7 +105,7 @@ const IndexPopup = () => {
     });
   };
 
-  const onClickItem = (item, items) => {
+  const onClickItem = async (item, items) => {
     if (item.code) {
       navigator.clipboard.writeText(item.code);
       setSnackbarMessage("コピーしました: " + item.code);
@@ -72,30 +122,57 @@ const IndexPopup = () => {
     );
     // バックグラウンドのGeminiにコードを渡す
     const query = getCode(item.bodies);
-    chrome.runtime.sendMessage(
-      { message: "fetchGemini", query },
-      (response) => {
-        console.log(response);
-        if (response.error) {
-          item.code = JSON.stringify(response.error);
-          setItems([...items]);
-          return;
-        }
-        const code = response?.candidates?.[0]?.content?.parts?.[0]?.text;
-        console.log("code", code);
-        item.code = code.trim();
-        setItems([...items]);
-        if (code.trim() === "該当なし") {
-          setSnackbarSeverity("error");
-          setSnackbarMessage("コードが見つかりませんでした");
-        } else {
-          navigator.clipboard.writeText(code);
-          setSnackbarMessage("コピーしました: " + code);
-          setSnackbarSeverity("success");
-        }
-        setOpenSnackbar(true);
-      },
-    );
+
+    if (geminiSession || geminiState === "available") {
+      if (!geminiSession) {
+        await initGeminiNano();
+        console.log("geminiSession", geminiSession);
+      }
+      const result = await geminiSession.prompt(query);
+      console.log("result", result);
+      item.code = result.trim();
+      setItems([...items]);
+      if (result === "該当なし") {
+        setSnackbarSeverity("error");
+        setSnackbarMessage("コードが見つかりませんでした");
+      } else {
+        navigator.clipboard.writeText(result);
+        setSnackbarMessage("コピーしました: " + result);
+        setSnackbarSeverity("success");
+      }
+      setOpenSnackbar(true);
+      return;
+    } else {
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Gemini Nanoが初期化されていません");
+      setOpenSnackbar(true);
+      return;
+    }
+
+    // chrome.runtime.sendMessage(
+    //   { message: "fetchGemini", query },
+    //   (response) => {
+    //     console.log(response);
+    //     if (response.error) {
+    //       item.code = JSON.stringify(response.error);
+    //       setItems([...items]);
+    //       return;
+    //     }
+    //     const code = response?.candidates?.[0]?.content?.parts?.[0]?.text;
+    //     console.log("code", code);
+    //     item.code = code.trim();
+    //     setItems([...items]);
+    //     if (code.trim() === "該当なし") {
+    //       setSnackbarSeverity("error");
+    //       setSnackbarMessage("コードが見つかりませんでした");
+    //     } else {
+    //       navigator.clipboard.writeText(code);
+    //       setSnackbarMessage("コピーしました: " + code);
+    //       setSnackbarSeverity("success");
+    //     }
+    //     setOpenSnackbar(true);
+    //   },
+    // );
   };
 
   const handleCloseSnackbar = () => {
@@ -123,13 +200,24 @@ const IndexPopup = () => {
       <Box my={1}>
         <ButtonGroup>
           <Button variant="contained" onClick={openOptions}>
-            {" "}
-            Options
+            Option
           </Button>
           <Button variant="contained" onClick={getGmails}>
-            gmails
+            gmail
           </Button>
+          {geminiState === "downloadable" && (
+            <Button variant="contained" onClick={initGeminiNano}>
+              GEMINI初期化
+            </Button>
+          )}
         </ButtonGroup>
+        {geminiState === "downloading" && (
+          <Box>
+            <Typography>Gemini Nano Downloading...</Typography>
+            <LinearProgress variant="determinate" value={geminiProgress} />
+            <Typography>{geminiProgress}%</Typography>
+          </Box>
+        )}
         <Box
           mt={2}
           sx={{
